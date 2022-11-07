@@ -1,1 +1,103 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>我和小璟</title><script defer="defer" src="/static/js/main.f4ab3ae2.js"></script><link href="/static/css/main.a4dff302.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+
+            /* border: 1px solid #333; */
+            margin: 100px;
+
+            animation: move 0.6s 11s linear infinite;
+
+        }
+
+        @keyframes move{
+            0%{
+                transform: scale(1);
+            }
+            25%{
+                transform: scale(1.2);
+            }
+            50%{
+                transform: scale(1);
+            }
+            75%{
+                transform: scale(0.7);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas width="600" height="600">
+
+    </canvas>
+
+    <script>
+
+    // 绘制心形
+    //     + 确定一个半径 r
+    //     + x轴坐标 = r * 16 * sin(i)^3
+    //     + y轴坐标 = r * 13cos(i) - 5cos(2i) - 2cos(3i) - cos(4i)
+        const canvas = document.querySelector("canvas")
+
+        const ctx = canvas.getContext("2d")
+
+        const text = "小雪  520"
+        const text1 = "小瑞"
+        ctx.font  = "20px FirCode"
+        ctx.strokeText(text,265,300)
+        ctx.strokeText(text1,270,350)
+
+        //将画布的坐标系移动到中间位置
+        ctx.translate(ctx.canvas.width / 2,ctx.canvas.height / 2)
+        ctx.scale(1,-1)
+
+        //添加渐变色
+        const linearGradient = ctx.createLinearGradient(0,300,600,300)
+
+        linearGradient.addColorStop(0, 'pink')
+        linearGradient.addColorStop(1, 'blue')
+
+        ctx.strokeStyle = linearGradient
+        ctx.fillStyle = linearGradient
+
+
+
+        ctx.moveTo(0,67)
+
+        let i = 0
+        
+        function fn(){
+            i+=0.01
+            let r = 13
+             //计算x坐标的位置
+
+            const x = r * 16 * Math.sin(i) * Math.sin(i) * Math.sin(i)
+            //计算y坐标位置
+            const y = r * (13 * Math.cos(i) - 5 * Math.cos( 2 * i ) - 2 * Math.cos(3 * i) - Math.cos(4 * i) )
+
+            ctx.lineTo(x,y)
+            ctx.stroke()
+
+            if(i > 6.5) {
+                clearInterval(timer)
+                ctx.fill()
+                
+            }
+        }
+        
+        let timer = setInterval(() => {
+            fn()
+        },15)
+
+
+    </script>
+</body>
+</html>
